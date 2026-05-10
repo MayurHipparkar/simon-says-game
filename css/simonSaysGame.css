@@ -6,6 +6,12 @@ body{
     background-color: #d6e3f0;
 }
 
+.high-score{
+    position: absolute;
+    top: 10px;
+    left: 20px;
+}
+
 .red{
     background-color: red;
 }
