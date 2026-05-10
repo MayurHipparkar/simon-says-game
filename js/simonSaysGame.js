@@ -3,10 +3,11 @@ let level=0;
 let btns=["blue","yellow","orange","red"];
 let gameSeq=[];
 let userSeq=[];
- let h2=document.querySelector("h2");
-
+let h2=document.querySelector("h2");
+let hScore=document.querySelector(".high-score span");
+ 
 document.addEventListener("keypress",function(){
-
+    
     //it start the game by preesing any key
     if(started==false){
         started=true;
@@ -69,12 +70,19 @@ function checkAns(idx){
            
         }
     }else{
-         h2.innerHTML=`<i>Game Over! </i><b> Your score was ${level} </b> <br>Press any key to start.`
+         h2.innerHTML=`<i>Game Over! </i><b> Your score was ${level-1} </b> <br>Press any key to start.`
          let body=document.querySelector("body");
          body.setAttribute("class","red");
          setTimeout(function(){
             body.removeAttribute("class");
          },100)
+
+         //set high score
+
+        if(level>hScore.innerText){
+            localStorage.setItem("hScore",`${level-1}`);
+            hScore.innerText=`${localStorage.getItem("hScore")}`;
+        }
          
          reset();
       
@@ -84,6 +92,9 @@ function checkAns(idx){
 
 //it tracking which button flashed by user.
 function buttonPress(){
+    if(!started){
+        return;
+    }
     let btn=this;
     userFlashBtn(btn); // calling userFlashBtn.
 
@@ -94,11 +105,14 @@ function buttonPress(){
     checkAns(userSeq.length-1); // passing last user pressed button index.
 }
 
-
 let allBtn=document.querySelectorAll(".btn");
-    for(btn of allBtn){
+for(btn of allBtn){
         btn.addEventListener("click",buttonPress);
     }
+
+    
+
+    
 
 
 
